@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Atividade de Análise</title>
+  <title>Atividade de Análise - Descrição Densa</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,9 +14,16 @@
       font-family: 'Poppins', sans-serif;
       background-color: #F8F8F8;
     }
-    /* Efeito suave no clique do botão */
     button:active {
       transform: scale(0.98);
+    }
+    /* Animação suave para o feedback aparecer */
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -26,7 +33,7 @@
 
     <div class="text-center mb-10">
         <h1 class="text-3xl font-black text-gray-800">Análise de Contexto</h1>
-        <p class="text-gray-500 mt-2">Observe as imagens e responda às questões.</p>
+        <p class="text-gray-500 mt-2">Observe as imagens e exercite o "olhar geertziano".</p>
     </div>
 
     <div class="bg-white p-6 rounded-lg shadow-sm mb-10 border border-gray-100">
@@ -47,14 +54,14 @@
       <textarea id="resp1" class="w-full border rounded p-3 text-gray-700 bg-white mb-3 focus:outline-none focus:ring-2 focus:ring-indigo-200 transition-shadow" rows="4"
         placeholder="Escreva sua análise aqui..."></textarea>
 
-      <button onclick="enviar(1)" class="text-white px-6 py-2 rounded-md transition duration-300 font-semibold shadow-md"
+      <button id="btn1" onclick="enviar(1)" class="text-white px-6 py-2 rounded-md transition duration-300 font-semibold shadow-md"
         style="background-color: #ff0040;"
         onmouseover="this.style.backgroundColor='#e00038'"
         onmouseout="this.style.backgroundColor='#ff0040'">
         Enviar resposta
       </button>
 
-      <p id="feedback1" class="mt-3 font-semibold text-sm"></p>
+      <div id="feedback1" class="hidden mt-6"></div>
     </div>
 
     <div class="bg-white p-6 rounded-lg shadow-sm mb-10 border border-gray-100">
@@ -75,38 +82,82 @@
       <textarea id="resp2" class="w-full border rounded p-3 text-gray-700 bg-white mb-3 focus:outline-none focus:ring-2 focus:ring-indigo-200 transition-shadow" rows="4"
         placeholder="Escreva sua análise aqui..."></textarea>
 
-      <button onclick="enviar(2)" class="text-white px-6 py-2 rounded-md transition duration-300 font-semibold shadow-md"
+      <button id="btn2" onclick="enviar(2)" class="text-white px-6 py-2 rounded-md transition duration-300 font-semibold shadow-md"
         style="background-color: #ff0040;"
         onmouseover="this.style.backgroundColor='#e00038'"
         onmouseout="this.style.backgroundColor='#ff0040'">
         Enviar resposta
       </button>
 
-      <p id="feedback2" class="mt-3 font-semibold text-sm"></p>
+      <div id="feedback2" class="hidden mt-6"></div>
     </div>
 
   </div>
 
   <script>
+    // Conteúdo dos Feedbacks
+    const gabaritos = {
+      1: `
+        <div class="bg-indigo-50 p-5 rounded-md border-l-4 border-indigo-500 text-gray-800 text-sm fade-in">
+          <h3 class="font-bold text-indigo-800 mb-3 text-base">Análise da Situação:</h3>
+          
+          <p class="mb-2"><strong class="text-indigo-900">• Descrição simples (superficial):</strong><br> A pessoa está apenas mostrando o que está bebendo.</p>
+          
+          <p class="mb-2"><strong class="text-indigo-900">• Descrição densa (olhar geertziano):</strong><br> Esse gesto pode significar várias coisas:</p>
+          <ul class="list-disc pl-5 mb-3 space-y-1 text-gray-700">
+            <li>Mostrar um momento de pausa e autocuidado.</li>
+            <li>Reforçar um estilo de vida associado a certas marcas (ex: Starbucks como status).</li>
+            <li>Conectar-se com amigos, sinalizando disponibilidade para conversar.</li>
+            <li>Criar pertencimento a uma comunidade (“team café” ou #coffeeaddict).</li>
+          </ul>
+          
+          <p class="italic font-medium text-gray-600 border-t border-indigo-200 pt-2 mt-2">
+            "Um gesto mínimo (postar uma foto trivial) condensa narrativas sobre identidade, consumo, vínculos sociais e até status cultural."
+          </p>
+        </div>
+      `,
+      2: `
+        <div class="bg-indigo-50 p-5 rounded-md border-l-4 border-indigo-500 text-gray-800 text-sm fade-in">
+          <h3 class="font-bold text-indigo-800 mb-3 text-base">Análise da Situação:</h3>
+          
+          <p class="mb-2"><strong class="text-indigo-900">• Descrição simples (superficial):</strong><br> A pessoa está rindo de algo.</p>
+          
+          <p class="mb-2"><strong class="text-indigo-900">• Descrição densa (olhar geertziano):</strong><br> Esse mesmo emoji pode ter múltiplos significados:</p>
+          <ul class="list-disc pl-5 mb-3 space-y-1 text-gray-700">
+            <li>Riso genuíno diante de algo engraçado.</li>
+            <li>Tentativa de amenizar uma crítica ou comentário sério, disfarçando a tensão.</li>
+            <li>Ironia: rir de algo que não é engraçado, para marcar uma posição.</li>
+            <li>Marca de cumplicidade: só quem compartilha o mesmo código entende a piada.</li>
+          </ul>
+          
+          <p class="italic font-medium text-gray-600 border-t border-indigo-200 pt-2 mt-2">
+            "Nesse caso, um simples '😂' é muito mais do que apenas 'riso': ele é um símbolo cultural que organiza relações e fronteiras de pertencimento."
+          </p>
+        </div>
+      `
+    };
+
     function enviar(num) {
       const textarea = document.getElementById("resp" + num);
-      const feedback = document.getElementById("feedback" + num);
+      const feedbackDiv = document.getElementById("feedback" + num);
+      const btn = document.getElementById("btn" + num);
 
+      // Validação simples
       if (textarea.value.trim() === "") {
-        feedback.textContent = "⚠ Por favor, escreva sua resposta antes de enviar.";
-        feedback.classList.remove("text-green-700");
-        feedback.classList.add("text-red-600");
+        alert("Por favor, escreva sua análise antes de enviar.");
         return;
       }
 
-      // Simulação de envio
-      feedback.innerHTML = "✅ Resposta enviada com sucesso!";
-      feedback.classList.remove("text-red-600");
-      feedback.classList.add("text-green-700");
-      
-      // Desabilitar edição após envio
+      // Desabilitar o campo e o botão
       textarea.disabled = true;
       textarea.classList.add("bg-gray-100", "cursor-not-allowed");
+      btn.classList.add("opacity-50", "cursor-not-allowed");
+      btn.innerText = "Enviado";
+      btn.onclick = null; // Remove a função de clique para evitar reenvio
+
+      // Inserir e mostrar o feedback específico
+      feedbackDiv.innerHTML = gabaritos[num];
+      feedbackDiv.classList.remove("hidden");
     }
   </script>
 </body>
