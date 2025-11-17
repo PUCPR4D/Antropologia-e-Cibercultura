@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atividade de Análise</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #F8F8F8;
+    }
+    /* Efeito suave no clique do botão */
+    button:active {
+      transform: scale(0.98);
+    }
+  </style>
+</head>
+
+<body class="p-6">
+  <div class="max-w-3xl mx-auto">
+
+    <div class="text-center mb-10">
+        <h1 class="text-3xl font-black text-gray-800">Análise de Contexto</h1>
+        <p class="text-gray-500 mt-2">Observe as imagens e responda às questões.</p>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-sm mb-10 border border-gray-100">
+
+      <div class="flex justify-center mb-6">
+        <div class="relative w-full max-w-sm aspect-square bg-gray-100 rounded-lg overflow-hidden shadow-md border border-gray-200">
+             <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=600&h=600&auto=format&fit=crop" 
+                  alt="Xícara de café" 
+                  class="w-full h-full object-cover">
+        </div>
+      </div>
+
+      <h2 class="text-xl font-bold mb-2" style="color: #6D64AE;">Situação 1</h2>
+      <p class="text-gray-700 mb-4">
+        Postar um “story” no Instagram mostrando uma xícara de café. O que essa ação pode significar?
+      </p>
+
+      <textarea id="resp1" class="w-full border rounded p-3 text-gray-700 bg-white mb-3 focus:outline-none focus:ring-2 focus:ring-indigo-200 transition-shadow" rows="4"
+        placeholder="Escreva sua análise aqui..."></textarea>
+
+      <button onclick="enviar(1)" class="text-white px-6 py-2 rounded-md transition duration-300 font-semibold shadow-md"
+        style="background-color: #ff0040;"
+        onmouseover="this.style.backgroundColor='#e00038'"
+        onmouseout="this.style.backgroundColor='#ff0040'">
+        Enviar resposta
+      </button>
+
+      <p id="feedback1" class="mt-3 font-semibold text-sm"></p>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-sm mb-10 border border-gray-100">
+
+      <div class="flex justify-center mb-6">
+        <div class="relative w-full max-w-sm aspect-square bg-gray-100 rounded-lg overflow-hidden shadow-md border border-gray-200">
+             <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600&h=600&auto=format&fit=crop" 
+                  alt="Celular com mensagens" 
+                  class="w-full h-full object-cover">
+        </div>
+      </div>
+
+      <h2 class="text-xl font-bold mb-2" style="color: #6D64AE;">Situação 2</h2>
+      <p class="text-gray-700 mb-4">
+        Usar o emoji 😂 em uma conversa de WhatsApp. O que essa ação pode significar?
+      </p>
+
+      <textarea id="resp2" class="w-full border rounded p-3 text-gray-700 bg-white mb-3 focus:outline-none focus:ring-2 focus:ring-indigo-200 transition-shadow" rows="4"
+        placeholder="Escreva sua análise aqui..."></textarea>
+
+      <button onclick="enviar(2)" class="text-white px-6 py-2 rounded-md transition duration-300 font-semibold shadow-md"
+        style="background-color: #ff0040;"
+        onmouseover="this.style.backgroundColor='#e00038'"
+        onmouseout="this.style.backgroundColor='#ff0040'">
+        Enviar resposta
+      </button>
+
+      <p id="feedback2" class="mt-3 font-semibold text-sm"></p>
+    </div>
+
+  </div>
+
+  <script>
+    function enviar(num) {
+      const textarea = document.getElementById("resp" + num);
+      const feedback = document.getElementById("feedback" + num);
+
+      if (textarea.value.trim() === "") {
+        feedback.textContent = "⚠ Por favor, escreva sua resposta antes de enviar.";
+        feedback.classList.remove("text-green-700");
+        feedback.classList.add("text-red-600");
+        return;
+      }
+
+      // Simulação de envio
+      feedback.innerHTML = "✅ Resposta enviada com sucesso!";
+      feedback.classList.remove("text-red-600");
+      feedback.classList.add("text-green-700");
+      
+      // Desabilitar edição após envio
+      textarea.disabled = true;
+      textarea.classList.add("bg-gray-100", "cursor-not-allowed");
+    }
+  </script>
+</body>
+</html>
