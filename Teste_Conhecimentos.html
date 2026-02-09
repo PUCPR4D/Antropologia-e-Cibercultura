@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Teste de conhecimentos: Identidade e alteridade em ambientes digitais</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body { 
+    font-family: 'Poppins', sans-serif; 
+    background:#f7f7f7; 
+    padding:1rem;
+}
+
+/* Cores escolhidas */
+:root {
+    --bordo: #8A0538;
+    --vermelho: #FF0040;
+    --roxo: #9654FF;
+}
+
+.correct{
+    background:#d1fae5 !important; 
+    border-color:#059669 !important;
+}
+.incorrect{
+    background:#fee2e2 !important; 
+    border-color:#ef4444 !important;
+}
+
+.comment-box {
+    background: #fdf4ff;
+    border-left: 6px solid var(--roxo);
+    padding: 1.5rem;
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+}
+</style>
+</head>
+
+<body>
+
+<div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow">
+
+<h1 class="text-2xl font-bold mb-4 text-center" style="color: var(--bordo);">
+Teste de conhecimentos: Identidade e alteridade em ambientes digitais
+</h1>
+
+<p class="mb-6 text-gray-700 leading-relaxed">
+Nesta atividade, você irá exercitar a compreensão crítica dos principais conceitos discutidos na aula sobre identidade, alteridade e cibercultura, especialmente a partir das análises de Byung-Chul Han.  
+Abaixo, você encontrará sete citações retiradas do material de estudo. Cada citação expressa uma ideia central trabalhada pelo autor e pelos professores na aula.  
+Sua tarefa é ler atentamente cada citação e, em seguida, selecionar a qual conceito ela se refere, escolhendo entre as opções que serão apresentadas.  
+<strong>Preparado? Vamos lá!</strong>
+</p>
+
+<div id="questions"></div>
+
+<div class="text-center mt-4">
+<button onclick="checkAnswers()" 
+class="py-2 px-6 rounded text-white font-semibold" 
+style="background: var(--bordo);">
+Verificar Respostas
+</button>
+<p id="result" class="mt-3 font-semibold text-lg" style="color: var(--bordo);"></p>
+</div>
+
+<div id="comments"></div>
+
+</div>
+
+<script>
+const questions = [
+{
+text:`“Na sociedade digital, a identidade já não é algo que simplesmente se ‘tem’, mas algo que se fabrica o tempo todo. É como se o sujeito precisasse se atualizar continuamente.”`,
+correct:"Identidade performática (identidade como performance e visibilidade)"
+},
+{
+text:`“O problema é que esse espelho digital não nos abre para o outro, mas nos fecha em um espaço narcísico, onde a alteridade é substituída por reflexos de nós mesmos.”`,
+correct:"Perda/fragilização da alteridade."
+},
+{
+text:`“O enxame digital é formado por indivíduos isolados, que aparecem juntos, mas não se conectam de fato. O resultado não é um ‘nós’ duradouro, mas ruído.”`,
+correct:"Enxame digital."
+},
+{
+text:`“Saímos da sociedade disciplinar e entramos na sociedade do desempenho, um tempo em que cada um se explora e se cobra em busca de reconhecimento.”`,
+correct:"Sociedade do desempenho."
+},
+{
+text:`“O smartphone é o novo espelho: um espelho digital que devolve não a realidade, mas uma imagem fabricada e performática.”`,
+correct:"Espelho digital (atualização do “estádio do espelho”)."
+},
+{
+text:`“A identidade digital vive da positividade: tudo precisa ser aceito, curtido e compartilhado; o ‘não’ desaparece.”`,
+correct:"Cultura da positividade / circuito de aprovação contínua."
+},
+{
+text:`“Na sociedade digital, a alteridade é capturada pela lógica do capital: cada gesto deixa de ser experiência e se transforma em dado, registro, mercadoria.”`,
+correct:"Protocolamento total da vida (redução do outro a dados e métricas)."
+}
+];
+
+const options = [
+"Perda/fragilização da alteridade.",
+"Enxame digital.",
+"Sociedade do desempenho.",
+"Espelho digital (atualização do “estádio do espelho”).",
+"Cultura da positividade / circuito de aprovação contínua.",
+"Identidade performática (identidade como performance e visibilidade)",
+"Protocolamento total da vida (redução do outro a dados e métricas)."
+];
+
+function load(){
+const container=document.getElementById("questions");
+
+questions.forEach((q,i)=>{
+const div=document.createElement("div");
+div.className="p-4 border rounded mb-4";
+div.style.background = "#f3ebff";     // <--- ALTERADO AQUI
+div.style.borderColor = "var(--bordo)";
+
+div.innerHTML=`
+<p class="mb-2"><strong>Citação ${i+1}:</strong> ${q.text}</p>
+<select id="q${i}" class="w-full p-2 border rounded">
+<option value="">Selecione</option>
+${options.map(o=>`<option value="${o}">${o}</option>`).join("")}
+</select>
+`;
+
+container.appendChild(div);
+
+const sel = div.querySelector("select");
+sel.addEventListener("change", e=>{
+sel.classList.remove("correct","incorrect");
+if(sel.value === "") return;
+if(sel.value === q.correct) sel.classList.add("correct");
+else sel.classList.add("incorrect");
+});
+});
+}
+
+function checkAnswers(){
+let score=0;
+questions.forEach((q,i)=>{
+const sel=document.getElementById("q"+i);
+if(sel.value===q.correct) score++;
+});
+
+document.getElementById("result").textContent =
+`Você acertou ${score} de ${questions.length}.`;
+
+loadComments();
+}
+
+function loadComments(){
+document.getElementById("comments").innerHTML = `
+<div class="comment-box">
+
+<h2 class="text-xl font-bold mb-4" style="color: var(--bordo);">
+Agora, verifique o comentário das respostas que preparamos para você.
+</h2>
+
+${generateCommentBlock()}
+</div>
+`;
+}
+
+function generateCommentBlock(){
+return `
+<p><strong>Citação 1:</strong><br>
+“Na sociedade digital, a identidade já não é algo que simplesmente se ‘tem’, mas algo que se fabrica o tempo todo...”<br>
+<strong>Conceito:</strong> Identidade Performática<br>
+<strong>Comentário:</strong> A citação mostra que a identidade deixou de ser uma base estável...</p><br>
+
+<p><strong>Citação 2:</strong><br>
+“O problema é que esse espelho digital não nos abre...”<br>
+<strong>Conceito:</strong> Perda / Fragilização da Alteridade<br>
+<strong>Comentário:</strong> No ambiente digital, não encontramos o outro como sujeito, mas reflexos de nós mesmos...</p><br>
+
+<p><strong>Citação 3:</strong><br>
+“O enxame digital é formado por indivíduos isolados...”<br>
+<strong>Conceito:</strong> Enxame Digital<br>
+<strong>Comentário:</strong> Presença simultânea sem vínculo, sem comunidade...</p><br>
+
+<p><strong>Citação 4:</strong><br>
+“Saímos da sociedade disciplinar e entramos na sociedade do desempenho...”<br>
+<strong>Conceito:</strong> Sociedade do Desempenho<br>
+<strong>Comentário:</strong> O poder externo vira autoexploração interna, intensificada pelo digital...</p><br>
+
+<p><strong>Citação 5:</strong><br>
+“O smartphone é o novo espelho...”<br>
+<strong>Conceito:</strong> Espelho Digital<br>
+<strong>Comentário:</strong> O celular funciona como espelho identitário, devolvendo imagens performáticas...</p><br>
+
+<p><strong>Citação 6:</strong><br>
+“A identidade digital vive da positividade...”<br>
+<strong>Conceito:</strong> Cultura da Positividade<br>
+<strong>Comentário:</strong> O excesso de “sim” apaga o conflito e enfraquece a alteridade...</p><br>
+
+<p><strong>Citação 7:</strong><br>
+“Na sociedade digital, a alteridade é capturada pela lógica do capital...”<br>
+<strong>Conceito:</strong> Protocolamento da Vida<br>
+<strong>Comentário:</strong> Tudo vira dado e mercadoria — inclusive o outro.</p>
+`;
+}
+
+load();
+</script>
+
+</body>
+</html>
